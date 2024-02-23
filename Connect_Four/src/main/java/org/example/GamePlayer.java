@@ -11,6 +11,10 @@ public class GamePlayer implements Player {
     private int lastMove = 0;
     private Scanner scanner = new Scanner(System.in);
 
+    public String getPlayerNumber() {
+        return playerNumber;
+    }
+
     public GamePlayer(Board board, GameController gameController, String playerNumber) {
         this.board = board;
         this.gameController = gameController;
