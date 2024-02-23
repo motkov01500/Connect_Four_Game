@@ -11,15 +11,20 @@ public class Board {
         fillBoardWithDots();
     }
 
+    public String[][] getBoard() {
+        return board;
+    }
+
     public synchronized boolean makeMove(int column, String player) {
-        if (column < 1 && column > cols) {
+        if (column < 1 || column > cols) {
             System.out.println("You must choose column from 1 to seven");
             return false;
         }
 
         for (int row = rows - 1; row >= 0; row--) {
-            if (board[column - 1][row] == ".") {
+            if (board[column - 1][row].equals(".")) {
                 board[column - 1][row] = player;
+                return true;
             }
         }
         System.out.println("Column " + column + "is full. Choose another column");
@@ -28,7 +33,7 @@ public class Board {
 
     public synchronized boolean isFull() {
         for (int col = 0; col < cols; col++) {
-            if (board[col][0] == ".") {
+            if (board[col][0].equals(".")) {
                 return false;
             }
         }
@@ -68,10 +73,10 @@ public class Board {
                 }
 
                 //Check for winner diagonal- down-left
-                if(row - 3 >= 0 && col -3 >=0  &&
-                        currentCell.equals(board[col - 1][row - 1]) &&
-                        currentCell.equals(board[col - 2][row - 2]) &&
-                        currentCell.equals(board[col - 3][row - 3])) {
+                if(row + 3 <rows && col -3 >=0  &&
+                        currentCell.equals(board[col - 1][row + 1]) &&
+                        currentCell.equals(board[col - 2][row + 2]) &&
+                        currentCell.equals(board[col - 3][row + 3])) {
                     return true;
                 }
             }

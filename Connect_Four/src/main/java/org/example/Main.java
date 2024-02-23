@@ -6,6 +6,5 @@ public class Main {
         GameController gameController = new GameController();
         Thread newThread = new Thread(gameController);
         newThread.start();
-        newThread.join();
     }
 }

@@ -1,19 +1,14 @@
 package org.example;
 
-import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class GamePlayer implements Player {
 
     private Board board;
     private GameController gameController;
-    private String playerNumber;
+    private volatile String playerNumber;
     private volatile boolean running = true;
-    private int lastMove = 0;
-    private Scanner scanner = new Scanner(System.in);
-
-    public String getPlayerNumber() {
-        return playerNumber;
-    }
+    private volatile static int lastMove = 0;
 
     public GamePlayer(Board board, GameController gameController, String playerNumber) {
         this.board = board;
@@ -25,7 +20,8 @@ public class GamePlayer implements Player {
     public int nextMove(int otherPlayerLastMove) {
         System.out.println("Other player last move is:" + otherPlayerLastMove);
         System.out.println("Hint: choose near column to put your token.");
-        int move = scanner.nextInt();
+        int move = ThreadLocalRandom.current().nextInt(1,8);
+        System.out.println(move);
         return move;
     }
 
@@ -53,11 +49,9 @@ public class GamePlayer implements Player {
             int move = nextMove(lastMove);
             if(board.makeMove(move,playerNumber)){
                 lastMove = move;
-                System.out.println("Player " + playerNumber + " made a move in column" + move);
-                gameController.checkGameState();
+                System.out.println("Player " + playerNumber + " made a move in column " + move + ".");
             } else {
                 System.out.println("Invalid move by " + playerNumber);
-                continue;
             }
             gameController.switchTurn();
         }

@@ -2,7 +2,6 @@ package org.example;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 
 public class GameController implements Runnable{
 
@@ -33,9 +32,7 @@ public class GameController implements Runnable{
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-
             checkGameState();
-            switchTurn();
         }
         executor.shutdownNow();
 
@@ -46,6 +43,7 @@ public class GameController implements Runnable{
 
     public void switchTurn() {
         currentPlayer = (currentPlayer == playerOne) ? playerTwo: playerOne;
+        System.out.println("The current player is:" + (currentPlayer == playerOne ? "1": "2"));
     }
 
     public synchronized void checkGameState() {
